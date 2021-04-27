@@ -16,7 +16,7 @@ BuildRequires:  libxml2-devel
 BuildRequires:  librsvg-devel
 BuildRequires:  libwebp-devel
 BuildRequires:  autoconf automake gcc gcc-c++
-BuildRequires:  fontconfig
+BuildRequires:  fontconfig sailfish-fonts
 BuildRequires:  make
 
 Requires:	%{name}-libs = %{version}-%{release}

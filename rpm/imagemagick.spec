@@ -196,7 +196,7 @@ rm -rf %{buildroot}/usr/share/man
 
 %check
 export LD_LIBRARY_PATH=%{buildroot}/%{_libdir}
-%make_build check || cat test-suite.log
+%make_build check || (cat test-suite.log && exit 1)
 rm PerlMagick/demo/Generic.ttf
 
 %post libs -p /sbin/ldconfig

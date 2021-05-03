@@ -1,7 +1,7 @@
 %global VER 6.9.12
 
 Name:		ImageMagick
-Version:	6.9.12.8
+Version:	6.9.12.12
 Release:	1%{?dist}
 Summary:	An X application for displaying and manipulating images
 

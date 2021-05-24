@@ -196,7 +196,13 @@ rm -rf %{buildroot}/usr/share/man
 
 %check
 export LD_LIBRARY_PATH=%{buildroot}/%{_libdir}
+# most likely due to using sb2 with i486 qemu-user we
+# observe crashes when executing these tests under
+# aarch64, the tests work properly on devices directly
+# TODO: re-check this once we have a 64 bit sdk.
+%ifnarch aarch64
 %make_build check
+%endif
 rm PerlMagick/demo/Generic.ttf
 
 %post libs -p /sbin/ldconfig

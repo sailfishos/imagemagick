@@ -123,9 +123,10 @@ export CFLAGS="%{optflags} -DIMPNG_SETJMP_IS_THREAD_SAFE"
 	--without-dps \
 	--without-gcc-arch
 
-# Do *NOT* use %%{?_smp_mflags}, this causes PerlMagick to be silently misbuild
-make
-
+# don't build together, PerlMagick could be miscompiled when using parallel build[1]
+# [1] https://build.opensuse.org/package/view_file/graphics/ImageMagick/ImageMagick.spec?expand=1
+make %{?_smp_mflags} all
+make -j1 perl-build
 
 %install
 %make_install

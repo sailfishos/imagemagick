@@ -1,7 +1,7 @@
 %global VER 6.9.12
 
 Name:		ImageMagick
-Version:	6.9.12.8
+Version:	6.9.12.12
 Release:	1%{?dist}
 Summary:	An X application for displaying and manipulating images
 
@@ -114,28 +114,19 @@ export CFLAGS="%{optflags} -DIMPNG_SETJMP_IS_THREAD_SAFE"
 	--disable-static \
 	--with-modules \
 	--with-perl \
-	--with-x \
 	--with-threads \
 	--with-magick_plus_plus \
-	--with-gslib \
-	--with-wmf \
 	--with-webp \
-	--with-openexr \
 	--with-rsvg \
 	--with-xml \
 	--with-perl-options="INSTALLDIRS=vendor %{?perl_prefix} CC='%__cc -L$PWD/magick/.libs' LDDLFLAGS='-shared -L$PWD/magick/.libs'" \
 	--without-dps \
-	--without-gcc-arch \
-	--with-jbig \
-	--with-openjp2 \
-	--with-raw \
-	--with-lqr \
-	--with-gvc \
-	--with-raqm
+	--without-gcc-arch
 
-# Do *NOT* use %%{?_smp_mflags}, this causes PerlMagick to be silently misbuild
-make
-
+# don't build together, PerlMagick could be miscompiled when using parallel build[1]
+# [1] https://build.opensuse.org/package/view_file/graphics/ImageMagick/ImageMagick.spec?expand=1
+make %{?_smp_mflags} all
+make -j1 perl-build
 
 %install
 %make_install
@@ -196,7 +187,13 @@ rm -rf %{buildroot}/usr/share/man
 
 %check
 export LD_LIBRARY_PATH=%{buildroot}/%{_libdir}
+# most likely due to using sb2 with i486 qemu-user we
+# observe crashes when executing these tests under
+# aarch64, the tests work properly on devices directly
+# TODO: re-check this once we have a 64 bit sdk.
+%ifnarch aarch64
 %make_build check
+%endif
 rm PerlMagick/demo/Generic.ttf
 
 %post libs -p /sbin/ldconfig

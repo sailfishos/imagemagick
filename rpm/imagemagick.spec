@@ -114,24 +114,14 @@ export CFLAGS="%{optflags} -DIMPNG_SETJMP_IS_THREAD_SAFE"
 	--disable-static \
 	--with-modules \
 	--with-perl \
-	--with-x \
 	--with-threads \
 	--with-magick_plus_plus \
-	--with-gslib \
-	--with-wmf \
 	--with-webp \
-	--with-openexr \
 	--with-rsvg \
 	--with-xml \
 	--with-perl-options="INSTALLDIRS=vendor %{?perl_prefix} CC='%__cc -L$PWD/magick/.libs' LDDLFLAGS='-shared -L$PWD/magick/.libs'" \
 	--without-dps \
-	--without-gcc-arch \
-	--with-jbig \
-	--with-openjp2 \
-	--with-raw \
-	--with-lqr \
-	--with-gvc \
-	--with-raqm
+	--without-gcc-arch
 
 # Do *NOT* use %%{?_smp_mflags}, this causes PerlMagick to be silently misbuild
 make

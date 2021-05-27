@@ -129,7 +129,8 @@ make %{?_smp_mflags} all
 make -j1 perl-build
 
 %install
-%make_install
+make install DESTDIR=%{buildroot}
+rm %{buildroot}%{_libdir}/*.la
 cp -a www/source %{buildroot}%{_datadir}/doc/%{name}-%{VER}
 
 # perlmagick: fix perl path of demo files

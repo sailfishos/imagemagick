@@ -6,7 +6,7 @@ Release:	1%{?dist}
 Summary:	An X application for displaying and manipulating images
 
 License:	ImageMagick
-Url:		http://www.imagemagick.org/
+Url:		https://github.com/sailfishos/imagemagick
 Source0:	%{name}-%{version}.tar.bz2
 
 BuildRequires:	bzip2-devel, freetype-devel, libjpeg-devel, libpng-devel

@@ -1,23 +1,28 @@
-%global VER 6.9.12
+%global VER 6.9.13
 
 Name:		ImageMagick
-Version:	6.9.12.12
-Release:	1%{?dist}
-Summary:	An X application for displaying and manipulating images
+Version:	6.9.13.11
+Release:	1
+Summary:	An application for displaying and manipulating images
 
 License:	ImageMagick
 Url:		https://github.com/sailfishos/imagemagick
 Source0:	%{name}-%{version}.tar.bz2
 
-BuildRequires:	bzip2-devel, freetype-devel, libjpeg-devel, libpng-devel
-BuildRequires:	libtiff-devel, giflib-devel, zlib-devel, perl-devel >= 5.8.1
-BuildRequires:  libtool-ltdl-devel
-BuildRequires:  libxml2-devel
-BuildRequires:  librsvg-devel
-BuildRequires:  libwebp-devel
-BuildRequires:  autoconf automake gcc gcc-c++
-BuildRequires:  sailfish-fonts
-BuildRequires:  make
+BuildRequires:	bzip2-devel
+BuildRequires:	giflib-devel
+BuildRequires:	libtool-ltdl-devel
+BuildRequires:	perl-devel >= 5.8.1
+BuildRequires:	pkgconfig(freetype2)
+BuildRequires:	pkgconfig(libjpeg)
+BuildRequires:	pkgconfig(libpng)
+BuildRequires:	pkgconfig(librsvg-2.0)
+BuildRequires:	pkgconfig(libtiff-4)
+BuildRequires:	pkgconfig(libwebp)
+BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	pkgconfig(zlib)
+BuildRequires:	autoconf automake
+BuildRequires:	sailfish-fonts
 
 Requires:	%{name}-libs = %{version}-%{release}
 
@@ -119,17 +124,17 @@ export CFLAGS="%{optflags} -DIMPNG_SETJMP_IS_THREAD_SAFE"
 	--with-webp \
 	--with-rsvg \
 	--with-xml \
-	--with-perl-options="INSTALLDIRS=vendor %{?perl_prefix} CC='%__cc -L$PWD/magick/.libs' LDDLFLAGS='-shared -L$PWD/magick/.libs'" \
+	--with-perl-options="INSTALLDIRS=vendor INSTALLVENDORARCH=%{perl_vendorarch} INSTALLVENDORMAN3DIR=%{_mandir}/man3 %{?perl_prefix} CC='%__cc -L$PWD/magick/.libs' LDDLFLAGS='-shared -L$PWD/magick/.libs'" \
 	--without-dps \
 	--without-gcc-arch
 
 # don't build together, PerlMagick could be miscompiled when using parallel build[1]
 # [1] https://build.opensuse.org/package/view_file/graphics/ImageMagick/ImageMagick.spec?expand=1
-make %{?_smp_mflags} all
+%make_build all
 make -j1 perl-build
 
 %install
-make install DESTDIR=%{buildroot}
+%make_install
 rm %{buildroot}%{_libdir}/*.la
 cp -a www/source %{buildroot}%{_datadir}/doc/%{name}-%{VER}
 

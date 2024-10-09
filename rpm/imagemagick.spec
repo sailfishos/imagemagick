@@ -1,5 +1,8 @@
 %global VER 6.9.13
 
+# Unset macro so that crucial la files are not removed
+%undefine __brp_remove_la_files
+
 Name:		ImageMagick
 Version:	6.9.13.11
 Release:	1
@@ -111,7 +114,9 @@ however.
 
 
 %build
-autoconf -f -i
+# No need to autoconf here, as the ImageMagick
+# source provides ready configure script.
+
 # Reduce thread contention, upstream sets this flag for Linux hosts
 export CFLAGS="%{optflags} -DIMPNG_SETJMP_IS_THREAD_SAFE"
 %configure \
@@ -135,7 +140,7 @@ make -j1 perl-build
 
 %install
 %make_install
-rm %{buildroot}%{_libdir}/*.la
+rm -f %{buildroot}%{_libdir}/*.la
 cp -a www/source %{buildroot}%{_datadir}/doc/%{name}-%{VER}
 
 # perlmagick: fix perl path of demo files
@@ -200,7 +205,7 @@ export LD_LIBRARY_PATH=%{buildroot}/%{_libdir}
 %ifnarch aarch64
 %make_build check
 %endif
-rm PerlMagick/demo/Generic.ttf
+rm -f PerlMagick/demo/Generic.ttf
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig

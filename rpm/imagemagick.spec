@@ -1,7 +1,7 @@
 %global VER 6.9.13
 
 Name:		ImageMagick
-Version:	6.9.13.11
+Version:	6.9.13.29
 Release:	1
 Summary:	An application for displaying and manipulating images
 

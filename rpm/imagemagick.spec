@@ -4,7 +4,7 @@
 %undefine __brp_remove_la_files
 
 Name:		ImageMagick
-Version:	6.9.13.43
+Version:	6.9.13.47
 Release:	1
 Summary:	An application for displaying and manipulating images
 

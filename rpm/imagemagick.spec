@@ -4,7 +4,7 @@
 %undefine __brp_remove_la_files
 
 Name:		ImageMagick
-Version:	6.9.13.52
+Version:	6.9.13.57
 Release:	1
 Summary:	An application for displaying and manipulating images
 
@@ -218,8 +218,8 @@ rm -f PerlMagick/demo/Generic.ttf
 
 %files libs
 %license LICENSE
-%{_libdir}/libMagickCore-6.Q16.so.8*
-%{_libdir}/libMagickWand-6.Q16.so.8*
+%{_libdir}/libMagickCore-6.Q16.so.7*
+%{_libdir}/libMagickWand-6.Q16.so.7*
 %{_libdir}/%{name}-%{VER}
 %{_datadir}/%{name}-6
 %dir %{_sysconfdir}/%{name}-6
@@ -245,7 +245,7 @@ rm -f PerlMagick/demo/Generic.ttf
 %{_includedir}/%{name}-6/wand
 
 %files c++
-%license www/Magick++/COPYING
+%license Magick++/LICENSE
 %{_libdir}/libMagick++-6.Q16.so.9*
 
 %files c++-devel
